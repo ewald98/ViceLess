@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,9 +9,10 @@
 
     <ImageView
         android:id="@+id/imageSlideIcon"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:layout_gravity="center"
         android:contentDescription="@string/app_name" />
 
 <!--    <ImageView-->
@@ -21,16 +23,42 @@
 <!--        app:srcCompat="@drawable/intro_text_placeholder"-->
 <!--        />-->
 
-    <TextView
-        android:id="@+id/textQuestion"
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="*Question*"
-        android:gravity="center"
-        android:textColor="@color/colorPrimaryText"
-        android:textSize="28dp"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle_container" >
 
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        <TextView
+            android:id="@+id/textQuestion"
+            android:layout_margin="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="*Question*"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="26dp"
+            android:fontFamily="sans-serif"
+            android:textStyle="italic" />
+
+        <View
+            android:layout_width="300dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryText" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="26dp"
+            android:ems="2"
+            android:inputType="number" />
+    </LinearLayout>
 
 
 </LinearLayout>
