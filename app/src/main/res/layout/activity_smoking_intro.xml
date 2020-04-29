@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".MainActivity">
+    tools:context=".SmokingIntroActivity">
 
 
     <LinearLayout
@@ -31,6 +31,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+<!--    android:backgroundTint="#35A2AF"-->
+<!--    android:backgroundTint="#36393F"-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonNext"
         android:layout_width="94dp"

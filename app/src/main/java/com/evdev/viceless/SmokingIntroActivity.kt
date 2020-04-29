@@ -1,21 +1,18 @@
-package com.example.viceless
+package com.evdev.viceless
 
 import android.content.Intent
-import android.media.Image
-import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
-class MainActivity : AppCompatActivity() {
+class SmokingIntroActivity : AppCompatActivity() {
 
     private val introSliderAdapter = IntroSliderAdapter(
         listOf(
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {}
 
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_smoking_intro)
         introSliderViewPager.adapter = introSliderAdapter
 
         setupIndicators()

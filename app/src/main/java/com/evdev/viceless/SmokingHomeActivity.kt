@@ -1,4 +1,4 @@
-package com.example.viceless
+package com.evdev.viceless
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

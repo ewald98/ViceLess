@@ -1,4 +1,4 @@
-package com.example.viceless
+package com.evdev.viceless
 
 import android.view.LayoutInflater
 import android.view.View
