@@ -1,9 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".SmokingHomeActivity">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/smoking_home_viceless"
+        android:orientation="horizontal" >
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+
+        <ImageButton
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+
+            android:id="@+id/smoking_menu_button"
+
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="17dp"
+            android:background="@drawable/smoking_menu_button"
+            />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="120dp"
+            android:layout_marginBottom="5dp"
+            app:srcCompat="@drawable/smoking_viceless_logo" />
+
+    </RelativeLayout>
+
+<!--    TODO: replace ConstraintLayout with GridLayout+CardView?-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="14dp">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@+id/smoking_money_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="326"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <RelativeLayout
+                    android:id="@+id/smoking_today_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="155"
+                    android:background="@drawable/smoking_wrapper"
+
+                    android:clickable="true"
+
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/smoking_stats_card"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="155dp"
+                        android:layout_height="211dp"
+                        android:orientation="vertical">
+
+
+                        <ProgressBar
+                            android:id="@+id/cigs_smoked_today_stat"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="145dp"
+                            android:layout_height="145dp"
+
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:max="20"
+
+                            android:progress="0"
+                            android:progressDrawable="@drawable/circular" />
+
+                        <TextView
+                            android:id="@+id/cigs_smoked_today_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Ciggaretes \nsmoked"
+                            android:textColor="@color/colorPrimaryText"
+                            android:textSize="20dp"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/cigs_smoked_today_num"
+                        android:layout_width="145dp"
+                        android:layout_height="145dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="28dp"
+                        android:textStyle="italic" />
+
+                </RelativeLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="16" />
+
+                <LinearLayout
+                    android:id="@+id/smoking_stats_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="155"
+
+
+                    android:background="@drawable/smoking_wrapper"
+                    android:orientation="vertical" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/smoking_money_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/smoking_wrapper2"
+                android:layout_margin="8dp"
+
+
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/smoking_dangers_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+                <ImageView
+                    android:id="@+id/smoking_money_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14dp"
+                    app:srcCompat="@drawable/smoking_money_icon" />
+
+                <TextView
+                    android:id="@+id/smoking_money_saved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="14dp"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryText"
+
+                    android:text="Money saved:\n0 lei" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/smoking_dangers_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/smoking_wrapper3"
+                android:orientation="vertical"
+                android:layout_margin="8dp"
+
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.551"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/smoking_money_card" >
+
+
+                <ImageView
+                    android:id="@+id/smoking_dangers_icon"
+                    android:layout_marginTop="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/smoking_danger_icon1" />
+
+                <TextView
+                    android:id="@+id/smoking_dangers_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="14dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimaryText"
+
+                    android:text="Smoking reduces fertility" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</LinearLayout>

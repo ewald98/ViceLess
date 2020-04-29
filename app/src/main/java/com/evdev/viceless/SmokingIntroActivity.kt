@@ -26,24 +26,23 @@ class SmokingIntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        try {
-            this.supportActionBar!!.hide()
-        } catch (e: NullPointerException) {}
+        hideActionBar()
 
         setContentView(R.layout.activity_smoking_intro)
         introSliderViewPager.adapter = introSliderAdapter
 
-        setupIndicators()
-        setCurrentIndicator(0)
-        introSliderViewPager.registerOnPageChangeCallback(object :
-            ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    setCurrentIndicator(position)
-                }
-            }
-        )
+        startIndicators()
 
+        setupButtons()
+    }
+
+    private fun hideActionBar() {
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {}
+    }
+
+    private fun setupButtons() {
         buttonNext.setOnClickListener {
             if (introSliderViewPager.currentItem + 1 < introSliderAdapter.itemCount) {
                 introSliderViewPager.currentItem += 1
@@ -55,6 +54,19 @@ class SmokingIntroActivity : AppCompatActivity() {
         skip_button.setOnClickListener {
             goToNextActivity()
         }
+    }
+
+    private fun startIndicators() {
+        setupIndicators()
+        setCurrentIndicator(0)
+        introSliderViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                setCurrentIndicator(position)
+            }
+        }
+        )
     }
 
     private fun goToNextActivity() {
