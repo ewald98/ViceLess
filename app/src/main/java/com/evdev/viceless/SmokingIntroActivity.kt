@@ -3,6 +3,7 @@ package com.evdev.viceless
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -47,15 +48,20 @@ class SmokingIntroActivity : AppCompatActivity() {
             if (introSliderViewPager.currentItem + 1 < introSliderAdapter.itemCount) {
                 introSliderViewPager.currentItem += 1
             } else {
-                Intent(applicationContext, SmokingHomeActivity::class.java).also {
-                    startActivity(it)
-                }
+                goToNextActivity()
             }
         }
+
         skip_button.setOnClickListener {
-            Intent(applicationContext, SmokingHomeActivity::class.java).also {
-                startActivity(it)
-            }
+            goToNextActivity()
+        }
+    }
+
+    private fun goToNextActivity() {
+        val s: Array<String> = introSliderAdapter.retrieveData()
+
+        Intent(applicationContext, SmokingHomeActivity::class.java).also {
+            startActivity(it)
         }
     }
 
