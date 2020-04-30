@@ -97,18 +97,81 @@
                         android:orientation="vertical">
 
 
-                        <ProgressBar
-                            android:id="@+id/cigs_smoked_today_stat"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="145dp"
-                            android:layout_height="145dp"
+<!--                        <ProgressBar-->
+<!--                            android:id="@+id/cigs_smoked_today_stat"-->
+<!--                            style="?android:attr/progressBarStyleHorizontal"-->
+<!--                            android:layout_width="145dp"-->
+<!--                            android:layout_height="145dp"-->
 
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginTop="10dp"-->
+<!--                            android:max="20"-->
+
+<!--                            android:progress="0"-->
+<!--                            android:progressDrawable="@drawable/circular" />-->
+
+                        <RelativeLayout
                             android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:max="20"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" >
 
-                            android:progress="0"
-                            android:progressDrawable="@drawable/circular" />
+
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/cigs_smoked_yesterday_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+
+                                app:cpb_progress_max="20"
+                                app:cpb_progress="10"
+                                app:cpb_background_progressbar_width="0dp"
+                                app:cpb_progress_direction="to_left"
+                                app:cpb_progressbar_color="#7B8992"
+                                app:cpb_progressbar_width="20dp"
+                                app:cpb_start_angle="270"
+                                />
+
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/cigs_smoked_today_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+
+                                app:cpb_progress_max="20"
+                                app:cpb_progress="3"
+                                app:cpb_background_progressbar_width="0dp"
+                                app:cpb_progress_direction="to_left"
+                                app:cpb_progressbar_color="@color/colorPrimary"
+                                app:cpb_progressbar_width="20dp"
+                                app:cpb_start_angle="270"
+                                    />
+                            <TextView
+                                android:id="@+id/cigs_smoked_today_num"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_centerVertical="true"
+
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+
+                                android:layout_marginRight="10dp"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/colorPrimaryText"
+                                android:textSize="28dp"
+                                android:textStyle="italic" />
+
+                        </RelativeLayout>
 
                         <TextView
                             android:id="@+id/cigs_smoked_today_text"
@@ -123,18 +186,6 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/cigs_smoked_today_num"
-                        android:layout_width="145dp"
-                        android:layout_height="145dp"
-                        android:layout_centerHorizontal="true"
-
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="28dp"
-                        android:textStyle="italic" />
 
                 </RelativeLayout>
 
