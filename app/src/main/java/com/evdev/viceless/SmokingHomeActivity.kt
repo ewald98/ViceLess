@@ -17,7 +17,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 class SmokingHomeActivity : AppCompatActivity() {
 
-    var x = 0
+    var x = 0.0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +36,14 @@ class SmokingHomeActivity : AppCompatActivity() {
 
         inc.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                x += 1
+                x += 1.0f
                 tv.setText(x.toString())
-                progress_bar_today.progress = x.toFloat()
+
+                if (x == progress_bar_today.progressMax) {
+                    progress_bar_today.progressMax *= 2.0f;
+                }
+
+                progress_bar_today.progress = x
             }
         })
 
