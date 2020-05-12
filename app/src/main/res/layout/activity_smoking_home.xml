@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="@drawable/smoking_home_viceless"
+        android:backgroundTint="@color/colorSecondaryText"
+        android:backgroundTintMode="multiply"
         android:orientation="horizontal" >
 
 
@@ -273,7 +275,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginBottom="14dp"
+                    android:layout_margin="14dp"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="20sp"
