@@ -1,27 +1,23 @@
-package com.evdev.viceless
+package com.evdev.viceless.smoking
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
+import com.evdev.viceless.IntroSlide
+import com.evdev.viceless.IntroSliderAdapter
+import com.evdev.viceless.R
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
 class SmokingIntroActivity : AppCompatActivity() {
 
-    private val introSliderAdapter = IntroSliderAdapter(
-        listOf(
-            IntroSlide("How many cigarettes do you usually smoke a day?", R.drawable.intro_image1),
-            IntroSlide("How much does a pack cost on average?", R.drawable.intro_image2),
-            IntroSlide("For how long have you been a smoker?", R.drawable.intro_image3)
-            )
-    )
+    private val introSliderAdapter = IntroSliderAdapter(Supplier.smokingIntroSlides)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

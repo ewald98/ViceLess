@@ -1,10 +1,11 @@
-package com.evdev.viceless
+package com.evdev.viceless.smoking
 
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.evdev.viceless.Supplier.smokingDangers
+import com.evdev.viceless.R
+import com.evdev.viceless.smoking.Supplier.smokingDangers
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 
@@ -37,7 +38,7 @@ class SmokingHomeActivity : AppCompatActivity() {
         inc.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 x += 1.0f
-                tv.setText(x.toString())
+                tv.setText(x.toInt().toString())
 
                 if (x == progress_bar_today.progressMax) {
                     progress_bar_today.progressMax *= 2.0f;

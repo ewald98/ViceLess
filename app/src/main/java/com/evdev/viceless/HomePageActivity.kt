@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
-import kotlinx.android.synthetic.main.activity_home_page.*
+import com.evdev.viceless.smoking.SmokingIntroActivity
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -20,7 +20,7 @@ class HomePageActivity : AppCompatActivity() {
 
         //It makes the buttons responsive on touch and open a new activity
         btnSmoke.setOnClickListener {
-            val smoke = Intent(this, SmokingIntroActivity :: class.java)
+            val smoke = Intent(this, SmokingIntroActivity:: class.java)
             startActivity(smoke)
         }
         btnAlcohol.setOnClickListener {

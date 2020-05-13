@@ -91,7 +91,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/smoking_stats_card"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="155dp"
@@ -197,7 +198,7 @@
                     android:layout_weight="16" />
 
                 <LinearLayout
-                    android:id="@+id/smoking_stats_card"
+                    android:id="@+id/smoking_stats_preview"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -205,9 +206,11 @@
                     android:layout_weight="155"
                     android:weightSum="100"
 
+                    android:clickable="true"
 
                     android:background="@drawable/smoking_wrapper"
-                    android:orientation="vertical" >
+                    android:orientation="vertical"
+                    android:focusable="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
