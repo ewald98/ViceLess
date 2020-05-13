@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import com.evdev.viceless.alcohol.AlcoholHomeActivity
+import com.evdev.viceless.drugs.DrugsHomeActivity
 import com.evdev.viceless.smoking.SmokingIntroActivity
 
 class HomePageActivity : AppCompatActivity() {
@@ -24,11 +26,11 @@ class HomePageActivity : AppCompatActivity() {
             startActivity(smoke)
         }
         btnAlcohol.setOnClickListener {
-            val alcohol = Intent(this, MainActivity :: class.java)
+            val alcohol = Intent(this, AlcoholHomeActivity:: class.java)
             startActivity(alcohol)
         }
         btnDrugs.setOnClickListener {
-            val drugs = Intent(this, MainActivity :: class.java)
+            val drugs = Intent(this, DrugsHomeActivity :: class.java)
             startActivity(drugs)
         }
 

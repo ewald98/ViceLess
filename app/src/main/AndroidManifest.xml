@@ -29,7 +29,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".alcohol.AlcoholHomeActivity">
         </activity>
 
         <activity android:name=".smoking.SmokingHomeActivity"
