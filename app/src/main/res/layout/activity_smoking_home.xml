@@ -80,7 +80,7 @@
                     android:layout_weight="155"
                     android:background="@drawable/smoking_wrapper"
 
-                    android:clickable="true"
+                    android:longClickable="true"
 
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
