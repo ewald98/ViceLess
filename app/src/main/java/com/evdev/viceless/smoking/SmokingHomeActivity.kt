@@ -1,5 +1,6 @@
 package com.evdev.viceless.smoking
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -17,11 +18,13 @@ class SmokingHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smoking_home)
 
+        onBackPressed()
 
         val randomInt = (0..11).shuffled().last()
         bindSmokingDanger(smokingDangers[randomInt])
 
         val inc: RelativeLayout = findViewById(R.id.smoking_today_card)
+        val smoking_stats_button = findViewById<LinearLayout>(R.id.smoking_stats_preview)
         val tv: TextView = findViewById(R.id.cigs_smoked_today_num)
 
         val progress_bar_yesterday =
@@ -35,22 +38,27 @@ class SmokingHomeActivity : AppCompatActivity() {
             progressMax = 20f
         }
 
-        inc.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                x += 1.0f
-                tv.setText(x.toInt().toString())
+        inc.setOnClickListener {
+            x += 1.0f
+            tv.setText(x.toInt().toString())
 
-                if (x == progress_bar_today.progressMax) {
-                    progress_bar_today.progressMax *= 2.0f;
-                }
-
-                progress_bar_today.progress = x
+            if (x == progress_bar_today.progressMax) {
+                progress_bar_today.progressMax *= 2.0f;
             }
-        })
 
+            progress_bar_today.progress = x
+        }
+
+        smoking_stats_button.setOnClickListener {
+            Intent(applicationContext, SmokingStatsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
 
 
     }
+
+    override fun onBackPressed() { }
 
     private fun bindSmokingDanger(smokingDanger: SmokingDanger) {
 

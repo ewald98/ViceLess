@@ -8,17 +8,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:weightSum="100"
         android:background="@drawable/smoking_home_viceless"
         android:backgroundTint="@color/colorSecondaryText"
         android:backgroundTintMode="multiply"
         android:orientation="horizontal" >
 
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
 
         <ImageButton
             android:layout_width="37dp"
@@ -88,7 +84,6 @@
 
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/smoking_stats_card"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
