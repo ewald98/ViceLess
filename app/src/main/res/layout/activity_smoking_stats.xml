@@ -59,20 +59,90 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:padding="10dp"
-            android:orientation="vertical"
-            android:background="@drawable/smoking_wrapper3">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="100dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/smoking_wrapper_stats">
+
+                <TextView
+                    android:id="@+id/stats_cigs_smoked_per_day_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Ciggaretes smoked"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/daily_cigs_bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/smoking_wrapper_stats">
+
+                <TextView
+                    android:id="@+id/stats_money_saved_per_day_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Money saved"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="20sp"
+                    android:textStyle="italic" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/daily_money_saved_bar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:orientation="vertical"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/smoking_wrapper_stats">
+
+                <TextView
+                    android:id="@+id/stats_craving_hours_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Craving hours"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="20sp"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="italic" />
+
+                <com.github.mikephil.charting.charts.RadarChart
+                    android:id="@+id/craving_hours_radar_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 

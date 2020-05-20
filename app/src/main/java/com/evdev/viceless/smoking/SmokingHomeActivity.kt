@@ -1,12 +1,14 @@
 package com.evdev.viceless.smoking
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.evdev.viceless.R
 import com.evdev.viceless.smoking.Supplier.smokingDangers
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import kotlinx.android.synthetic.main.activity_smoking_home.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -14,6 +16,7 @@ class SmokingHomeActivity : AppCompatActivity() {
     var cigs_smoked_today = 0.0f
     private lateinit var smoked_today_increment_button: RelativeLayout
     private lateinit var smoking_stats_button: LinearLayout
+    private lateinit var craving_button: LinearLayout
     private lateinit var smoked_today_textview: TextView
 
     private lateinit var progress_bar_today: CircularProgressBar
@@ -29,6 +32,7 @@ class SmokingHomeActivity : AppCompatActivity() {
         smoked_today_increment_button = findViewById(R.id.smoking_today_card)
         smoking_stats_button = findViewById(R.id.smoking_stats_preview)
         smoked_today_textview = findViewById(R.id.cigs_smoked_today_num)
+        craving_button = findViewById(R.id.craving_button)
 
         progress_bar_yesterday = findViewById(R.id.cigs_smoked_yesterday_bar)
         progress_bar_today= findViewById(R.id.cigs_smoked_today_bar)
@@ -51,6 +55,12 @@ class SmokingHomeActivity : AppCompatActivity() {
 
         smoking_stats_button.setOnClickListener {
             Intent(applicationContext, SmokingStatsActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        craving_button.setOnClickListener {
+            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com")).also {
                 startActivity(it)
             }
         }

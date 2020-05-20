@@ -38,5 +38,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
     implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
 }
