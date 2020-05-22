@@ -18,7 +18,7 @@ class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
     private var _retData: Array<String>
 
     init {
-        _retData = Array<String>(3, {i -> ""})
+        _retData = Array<String>(introSlides.size, {i -> ""})
     }
 
     inner class IntroSlideViewHolder(view: View) : RecyclerView.ViewHolder(view) {

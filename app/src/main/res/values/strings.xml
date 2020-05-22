@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Viceless</string>
     <string name="homepageTitle"> Choose your vice: </string>
-    <string name="skip">Skip</string>
+    <string name="skip"><u>Skip</u></string>
     <string name="next">next</string>
 
     <!-- TODO: Remove or change this placeholder text -->

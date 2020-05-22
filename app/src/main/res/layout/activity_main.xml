@@ -4,7 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".activities.MainActivity">
+=======
+    tools:context=".alcohol.AlcoholHomeActivity">
+>>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
 
     <TextView
         android:layout_width="wrap_content"

@@ -7,12 +7,22 @@
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+<<<<<<< HEAD
     tools:context=".activities.HomePageActivity"
     android:background="@color/splashBackground">
+=======
+    android:background="@color/splashBackground"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    android:paddingBottom="30dp"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
+>>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< HEAD
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
@@ -20,6 +30,31 @@
             android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+=======
+        android:layout_gravity="center"
+        android:background="@drawable/rectangle_frame"
+        android:paddingTop="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="@string/homepageTitle"
+            android:gravity="top|center"
+            android:textSize="25sp"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:paddingTop="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+>>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
 
         <fragment
             android:id="@+id/fragment"
@@ -37,5 +72,40 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"/>
 
+<<<<<<< HEAD
+=======
+            <ImageButton
+                android:id="@+id/smokingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/nosmoking"
+                android:scaleType="fitCenter"
+                android:layout_margin="22dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorSecondaryText"/>
+            <ImageButton
+                android:id="@+id/alcoholButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/noalcohol"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginLeft="22dp"
+
+                android:adjustViewBounds="true"
+                android:background="@color/colorSecondaryText"/>
+            <ImageButton
+                android:id="@+id/drugButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/nodrugs"
+                android:scaleType="fitCenter"
+                android:layout_marginBottom="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginLeft="22dp"
+                android:adjustViewBounds="true"
+                android:background="@color/colorSecondaryText"/>
+>>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
 
 </androidx.drawerlayout.widget.DrawerLayout>
