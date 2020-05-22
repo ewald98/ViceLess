@@ -1,9 +1,10 @@
-package com.evdev.viceless
+package com.evdev.viceless.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.evdev.viceless.R
 
 class SplashActivity : AppCompatActivity() {
 
@@ -15,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
         while the splash screen is loading*/
 
         Handler().postDelayed({
-            startActivity(Intent(this, HomePageActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, SPLASH_TIMER)
     }

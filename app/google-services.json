@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1033149593028",
+    "firebase_url": "https://viceless.firebaseio.com",
+    "project_id": "viceless",
+    "storage_bucket": "viceless.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033149593028:android:eb32815ff5ef12400a6091",
+        "android_client_info": {
+          "package_name": "com.evdev.viceless"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033149593028-mosl4vpj8mk2m8kmpa5otsr3mkhpap9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsvD0X-Iqfh5agDxreDHHpsSx4oYUzqH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033149593028-mosl4vpj8mk2m8kmpa5otsr3mkhpap9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

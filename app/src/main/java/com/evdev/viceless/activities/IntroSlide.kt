@@ -1,4 +1,4 @@
-package com.evdev.viceless
+package com.evdev.viceless.activities
 
 data class IntroSlide (
     val question: String,

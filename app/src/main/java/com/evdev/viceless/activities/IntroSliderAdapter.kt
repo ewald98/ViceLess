@@ -1,4 +1,4 @@
-package com.evdev.viceless
+package com.evdev.viceless.activities
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,12 +9,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.evdev.viceless.R
 
 
 class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
     RecyclerView.Adapter<IntroSliderAdapter.IntroSlideViewHolder>() {
 
-    private lateinit var _retData: Array<String>
+    private var _retData: Array<String>
 
     init {
         _retData = Array<String>(3, {i -> ""})
@@ -56,14 +57,13 @@ class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
         holder.bind(introSlides[position])
 
         holder.getAnswer().addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun afterTextChanged(s: Editable?) {
                 _retData.set(position, s.toString())
             }
 
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
     }
 

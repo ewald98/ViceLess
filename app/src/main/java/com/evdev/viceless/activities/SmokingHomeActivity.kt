@@ -1,18 +1,13 @@
-package com.evdev.viceless
+package com.evdev.viceless.activities
 
-import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
-import android.text.Layout
-import android.text.TextWatcher
-import android.transition.CircularPropagation
 import android.view.View
-import android.view.animation.DecelerateInterpolator
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.evdev.viceless.R
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import kotlinx.android.synthetic.main.activity_smoking_home.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -46,8 +41,17 @@ class SmokingHomeActivity : AppCompatActivity() {
                 progress_bar_today.progress = x
             }
         })
+        savedMoney()
+    }
 
 
+    private fun savedMoney() {
+        var intent = intent
+        //val answers: Array<String> = intent.getStringArrayExtra("Answers")
+        val startDate = intent.getStringExtra("StartDate")
+        val cond = intent.getIntExtra("Condition", -1)
+        val textChange = findViewById<TextView>(R.id.smoking_money_saved)
+        textChange.text = cond.toString() + " lei"
+    }
 
     }
-}

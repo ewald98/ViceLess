@@ -234,15 +234,15 @@
                     android:id="@+id/smoking_money_saved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginRight="14dp"
                     android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textStyle="italic"
+                    android:layout_marginRight="14dp"
+                    android:layout_weight="1"
+                    android:text="Money saved:\n0 lei"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryText"
+                    android:textSize="20sp"
 
-                    android:text="Money saved:\n0 lei" />
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -288,5 +288,12 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/nav_menu"
+        android:layout_gravity = "start"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

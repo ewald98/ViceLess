@@ -1,7 +1,8 @@
-package com.evdev.viceless
+package com.evdev.viceless.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.evdev.viceless.R
 
 class MainActivity : AppCompatActivity() {
 
