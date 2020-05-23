@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.evdev.viceless.R
-import com.evdev.viceless.smoking.Supplier.smokingDangers
+import com.evdev.viceless.utils.SmokingDanger
+import com.evdev.viceless.utils.Supplier.smokingDangers
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
-import kotlinx.android.synthetic.main.activity_smoking_home.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {

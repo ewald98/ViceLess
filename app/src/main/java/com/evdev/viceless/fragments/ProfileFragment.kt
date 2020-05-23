@@ -6,13 +6,12 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
-import com.evdev.viceless.fragments.ProfileFragmentDirections
 import com.evdev.viceless.R
 import com.evdev.viceless.utils.toast
 import com.google.firebase.auth.FirebaseAuth

@@ -8,7 +8,7 @@ import com.evdev.viceless.R
 
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_TIMER:Long = 4000 //setting de delay variable for 2 seconds
+    private val SPLASH_TIMER:Long = 2000 //setting de delay variable for 1 seconds
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

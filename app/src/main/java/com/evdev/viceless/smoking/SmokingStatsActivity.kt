@@ -3,12 +3,9 @@ package com.evdev.viceless.smoking
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.evdev.viceless.R
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.RadarChart
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*

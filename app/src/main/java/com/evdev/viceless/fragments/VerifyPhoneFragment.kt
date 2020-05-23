@@ -1,13 +1,12 @@
 package com.evdev.viceless.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.evdev.viceless.R
-import com.evdev.viceless.fragments.VerifyPhoneFragmentDirections
 import com.evdev.viceless.utils.toast
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth

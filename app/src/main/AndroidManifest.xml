@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ResetPasswordActivity"></activity>
+        <activity android:name=".activities.ResetPasswordActivity"/>
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -31,39 +31,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".activities.HomePageActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".activities.SmokingHomeActivity"
+            android:name=".smoking.SmokingHomeActivity"
             android:theme="@style/AppTheme2" />
         <activity
-            android:name=".activities.SmokingIntroActivity"
-            android:theme="@style/AppTheme2" />
-=======
-
-        <activity android:name=".HomePageActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-
-        <activity android:name=".smoking.SmokingHomeActivity"
-            android:theme="@style/AppTheme2"/>
-
-        <activity android:name=".smoking.SmokingIntroActivity"
+            android:name=".smoking.SmokingIntroActivity"
             android:theme="@style/AppTheme2" />
 
         <activity android:name=".smoking.SmokingStatsActivity"
             android:theme="@style/AppTheme2" />
 
-
         <activity android:name=".alcohol.AlcoholHomeActivity" />
 
         <activity android:name=".drugs.DrugsHomeActivity" />
 
->>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
+
     </application>
 
 </manifest>

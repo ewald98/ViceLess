@@ -1,6 +1,6 @@
-package com.evdev.viceless.smoking
+package com.evdev.viceless.utils
 
-import com.evdev.viceless.IntroSlide
+import com.evdev.viceless.activities.IntroSlide
 import com.evdev.viceless.R
 
 data class SmokingDanger (

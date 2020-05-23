@@ -7,8 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.evdev.viceless.R
-import com.evdev.viceless.activities.MainActivity
-import com.evdev.viceless.activities.SmokingHomeActivity
+import com.evdev.viceless.alcohol.AlcoholHomeActivity
+import com.evdev.viceless.drugs.DrugsHomeActivity
+import com.evdev.viceless.smoking.SmokingHomeActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -32,13 +33,13 @@ class HomeFragment : Fragment() {
         }
         alcoholButton.setOnClickListener{
             activity?.let {
-                val intent = Intent (it, MainActivity::class.java)
+                val intent = Intent (it, AlcoholHomeActivity::class.java)
                 it.startActivity(intent)
             }
         }
         drugButton.setOnClickListener{
             activity?.let {
-                val intent = Intent (it, MainActivity::class.java)
+                val intent = Intent (it, DrugsHomeActivity::class.java)
                 it.startActivity(intent)
             }
         }

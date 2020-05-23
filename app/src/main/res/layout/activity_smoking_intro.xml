@@ -5,11 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-<<<<<<< HEAD
-    tools:context=".activities.SmokingIntroActivity">
-=======
     tools:context=".smoking.SmokingIntroActivity">
->>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa
 
 
     <LinearLayout

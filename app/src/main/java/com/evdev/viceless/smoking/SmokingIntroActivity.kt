@@ -1,8 +1,4 @@
-<<<<<<< HEAD:app/src/main/java/com/evdev/viceless/activities/SmokingIntroActivity.kt
-package com.evdev.viceless.activities
-=======
 package com.evdev.viceless.smoking
->>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa:app/src/main/java/com/evdev/viceless/smoking/SmokingIntroActivity.kt
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,18 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.viewpager2.widget.ViewPager2
-<<<<<<< HEAD:app/src/main/java/com/evdev/viceless/activities/SmokingIntroActivity.kt
-=======
-import com.evdev.viceless.IntroSlide
-import com.evdev.viceless.IntroSliderAdapter
->>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa:app/src/main/java/com/evdev/viceless/smoking/SmokingIntroActivity.kt
 import com.evdev.viceless.R
+import com.evdev.viceless.activities.IntroSlide
+import com.evdev.viceless.activities.IntroSliderAdapter
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
 class SmokingIntroActivity : AppCompatActivity() {
 
-<<<<<<< HEAD:app/src/main/java/com/evdev/viceless/activities/SmokingIntroActivity.kt
     private var startDate = ""
     private val introSliderAdapter =
         IntroSliderAdapter(
@@ -43,9 +35,6 @@ class SmokingIntroActivity : AppCompatActivity() {
                 )
             )
         )
-=======
-    private val introSliderAdapter = IntroSliderAdapter(Supplier.smokingIntroSlides)
->>>>>>> 526cffbfba4c522daf80cfec99082353d1187ffa:app/src/main/java/com/evdev/viceless/smoking/SmokingIntroActivity.kt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
