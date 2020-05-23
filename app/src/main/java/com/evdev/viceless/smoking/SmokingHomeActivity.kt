@@ -3,12 +3,23 @@ package com.evdev.viceless.smoking
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.evdev.viceless.R
+import com.evdev.viceless.activities.HomePageActivity
+import com.evdev.viceless.fragments.ProfileFragment
 import com.evdev.viceless.utils.SmokingDanger
 import com.evdev.viceless.utils.Supplier.smokingDangers
+import com.evdev.viceless.utils.flagsLogOut
+import com.google.firebase.auth.FirebaseAuth
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import kotlinx.android.synthetic.main.activity_smoking_home.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -65,6 +76,14 @@ class SmokingHomeActivity : AppCompatActivity() {
             }
         }
 
+        val clickListener = View.OnClickListener { view ->
+            when (view.id) {
+                R.id.smoking_menu_button ->{
+                    showPopup(view)
+                }
+            }
+        }
+        smoking_menu_button.setOnClickListener(clickListener)
     }
 
     override fun onBackPressed() {
@@ -86,6 +105,37 @@ class SmokingHomeActivity : AppCompatActivity() {
 
         dangersText.text = smokingDanger.dangerText
         dangersIcon.setImageResource(smokingDanger.icon)
+    }
 
+    private fun showPopup(view: View){
+        var popUp : PopupMenu? = null
+        popUp = PopupMenu(this, view)
+        popUp.inflate(R.menu.other_menu)
+
+        popUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+            when (item!!.itemId) {
+                R.id.header1 -> {
+                    this.startActivity(Intent(this,HomePageActivity::class.java))
+                }
+                R.id.header2 -> {
+                    Toast.makeText(this@SmokingHomeActivity, "Vreau sa deschid profileFragment", Toast.LENGTH_SHORT).show();//dar inca nu nu stiu cum...
+                }
+                R.id.header3 -> {
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Are you sure?")
+                        setPositiveButton("Yes"){_, _ ->
+                            FirebaseAuth.getInstance().signOut()
+                            flagsLogOut()
+                        }
+                        setNegativeButton("Cancel"){_, _ ->
+                        }
+                    }.create().show()
+                }
+            }
+
+            true
+        })
+        popUp.show()
     }
 }
