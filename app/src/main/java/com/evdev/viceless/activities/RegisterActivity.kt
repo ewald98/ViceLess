@@ -57,7 +57,6 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener(this){task ->
                 progressbar.visibility = View.GONE
                 if(task.isSuccessful){
-//                    saveUserToFirebaseDatabase(email)
                     flags()
                 }else{
                     task.exception?.message?.let{
@@ -67,16 +66,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
     }
-
-//    private fun saveUserToFirebaseDatabase(email: String) {
-//        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Null UID"
-//        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-//        val user = User(uid, email, "-1", "-1", "-1")
-//
-//        ref.setValue(user)
-//    }
-
-
+    
     override fun onStart() {
         super.onStart()
 
@@ -85,5 +75,3 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 }
-
-//class User(val uid: String, val username: String, answer1: String, answer2: String, answer3: String)
