@@ -30,7 +30,7 @@ class SmokingStatsActivity: AppCompatActivity() {
 
     private fun createRadarChart(radarChart: RadarChart) {
 
-        val days = arrayListOf<String>("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23")
+        val days = arrayListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23")
         val xAxisFormatter = IndexAxisValueFormatter(days)
 
         val xAxis: XAxis = radarChart.getXAxis()
@@ -94,7 +94,7 @@ class SmokingStatsActivity: AppCompatActivity() {
     private fun createBarChart(barChart: BarChart) {
 
 
-        val days = arrayListOf<String>("11.05", "12.05", "13.05", "14.05", "15.05", "16.05", "17.05", "18.05", "19.05")
+        val days = arrayListOf("11.05", "12.05", "13.05", "14.05", "15.05", "16.05", "17.05", "18.05", "19.05")
         val xAxisFormatter = IndexAxisValueFormatter(days)
 
         val xAxis: XAxis = barChart.getXAxis()
@@ -151,7 +151,7 @@ class SmokingStatsActivity: AppCompatActivity() {
         barChart.setNoDataTextColor(Color.BLACK)
         barChart.setDrawGridBackground(false)
         barChart.setDrawBorders(false)
-        barChart.setMaxVisibleValueCount(7);
+        barChart.setMaxVisibleValueCount(7)
 
         barChart.setTouchEnabled(true)
         barChart.isScaleXEnabled = true

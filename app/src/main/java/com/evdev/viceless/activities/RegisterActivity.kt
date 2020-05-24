@@ -1,15 +1,14 @@
 package com.evdev.viceless.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.evdev.viceless.R
 import com.evdev.viceless.utils.flags
 import com.evdev.viceless.utils.toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
@@ -66,7 +65,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
     }
-    
+
     override fun onStart() {
         super.onStart()
 

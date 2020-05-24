@@ -1,10 +1,10 @@
 package com.evdev.viceless.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.evdev.viceless.R
@@ -37,7 +37,7 @@ class HomePageActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item?.itemId == R.id.action_logout){
+        if(item.itemId == R.id.action_logout){
             AlertDialog.Builder(this).apply {
                 setTitle("Are you sure?")
                 setPositiveButton("Yes"){_, _ ->

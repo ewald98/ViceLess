@@ -87,12 +87,16 @@ class SmokingIntroActivity : AppCompatActivity() {
         )
     }
 
-    //string saves data from questions
+
     private fun goToNextActivity() {
-        val s: Array<String> = introSliderAdapter.retrieveData()
+        var s: Array<String> = introSliderAdapter.retrieveData()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Null UID"
+        val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val user = User(uid, email, s[0], s[1], s[2])
+        Log.d("Data in User object", "Answer 1 "+ user.cigs_smoked + " Answer 2 "+ user.cigs_cost + " Answer 3 "+ user.smoke_time )
+        ref.setValue(user)
         Intent(applicationContext, SmokingHomeActivity::class.java).also {
-            it.putExtra("Answers",s)
-            it.putExtra("StartDate",startDate)
             startActivity(it)
         }
     }
@@ -131,7 +135,7 @@ class SmokingIntroActivity : AppCompatActivity() {
             )
         }
     }
-
+    class User(val uid: String = "", val username: String = "", val cigs_smoked: String = "", val cigs_cost: String = "", val smoke_time: String = "")
 }
 
 

@@ -3,23 +3,17 @@ package com.evdev.viceless.smoking
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.evdev.viceless.R
 import com.evdev.viceless.activities.HomePageActivity
-import com.evdev.viceless.fragments.ProfileFragment
 import com.evdev.viceless.utils.SmokingDanger
 import com.evdev.viceless.utils.Supplier.smokingDangers
 import com.evdev.viceless.utils.flagsLogOut
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_smoking_home.*
 
@@ -60,7 +54,7 @@ class SmokingHomeActivity : AppCompatActivity() {
             smoked_today_textview.text = cigs_smoked_today.toInt().toString()
 
             if (cigs_smoked_today == progress_bar_today.progressMax) {
-                progress_bar_today.progressMax *= 2.0f;
+                progress_bar_today.progressMax *= 2.0f
             }
 
             progress_bar_today.progress = cigs_smoked_today
@@ -86,13 +80,12 @@ class SmokingHomeActivity : AppCompatActivity() {
             }
         }
         smoking_menu_button.setOnClickListener(clickListener)
-        saveUserToFirebaseDatabase()
     }
 
     override fun onBackPressed() {
 
         if (progress_bar_today.progressMax > 20f && cigs_smoked_today <= progress_bar_today.progressMax/2) {
-            progress_bar_today.progressMax /= 2.0f;
+            progress_bar_today.progressMax /= 2.0f
         }
 
         if (cigs_smoked_today > 0.0f) cigs_smoked_today -= 1.0f
@@ -111,7 +104,7 @@ class SmokingHomeActivity : AppCompatActivity() {
     }
 
     private fun showPopup(view: View){
-        var popUp : PopupMenu? = null
+        var popUp: PopupMenu?
         popUp = PopupMenu(this, view)
         popUp.inflate(R.menu.other_menu)
 
@@ -122,7 +115,7 @@ class SmokingHomeActivity : AppCompatActivity() {
                     this.startActivity(Intent(this,HomePageActivity::class.java))
                 }
                 R.id.header2 -> {
-                    Toast.makeText(this@SmokingHomeActivity, "Vreau sa deschid profileFragment", Toast.LENGTH_SHORT).show();//dar inca nu nu stiu cum...
+                    Toast.makeText(this@SmokingHomeActivity, "Vreau sa deschid profileFragment", Toast.LENGTH_SHORT).show()//dar inca nu nu stiu cum...
                 }
                 R.id.header3 -> {
                     AlertDialog.Builder(this).apply {
@@ -141,16 +134,5 @@ class SmokingHomeActivity : AppCompatActivity() {
         })
         popUp.show()
     }
-    private fun saveUserToFirebaseDatabase() {
 
-        val s: Array<String> = intent.getStringArrayExtra("Answers")
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Null UID"
-        val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-        val user = User(uid, email, s[0], s[1], s[2])
-        Log.d("Data in User object", "Answer 1 "+ user.cigs_smoked + " Answer 2 "+ user.cigs_cost + " Answer 3 "+ user.smoke_time )
-        ref.setValue(user)
-    }
-
-    class User(val uid: String, val username: String, val cigs_smoked: String, val cigs_cost: String, val smoke_time: String)
 }

@@ -10,7 +10,7 @@ data class SmokingDanger (
 
 object Supplier {
 
-    val smokingIntroSlides = listOf<IntroSlide>(
+    val smokingIntroSlides = listOf(
         IntroSlide(
             "How many cigarettes do you usually smoke a day?",
             R.drawable.intro_image1
@@ -26,7 +26,7 @@ object Supplier {
     )
 
     // TODO: add onclick redirect to a url?
-    val smokingDangers = listOf<SmokingDanger>(
+    val smokingDangers = listOf(
         SmokingDanger(
             "Smoking can affect sperm quality and decreases fertility",
             R.drawable.smoking_danger_icon1
