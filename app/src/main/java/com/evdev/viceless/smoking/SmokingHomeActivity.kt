@@ -1,8 +1,10 @@
 package com.evdev.viceless.smoking
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -14,6 +16,10 @@ import com.evdev.viceless.utils.SmokingDanger
 import com.evdev.viceless.utils.Supplier.smokingDangers
 import com.evdev.viceless.utils.flagsLogOut
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_smoking_home.*
 
@@ -31,6 +37,7 @@ class SmokingHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedMoney()
         setContentView(R.layout.activity_smoking_home)
 
         val randomInt = (0..11).shuffled().last()
@@ -80,6 +87,7 @@ class SmokingHomeActivity : AppCompatActivity() {
             }
         }
         smoking_menu_button.setOnClickListener(clickListener)
+
     }
 
     override fun onBackPressed() {
@@ -104,7 +112,7 @@ class SmokingHomeActivity : AppCompatActivity() {
     }
 
     private fun showPopup(view: View){
-        var popUp: PopupMenu?
+        val popUp: PopupMenu?
         popUp = PopupMenu(this, view)
         popUp.inflate(R.menu.other_menu)
 
@@ -135,4 +143,42 @@ class SmokingHomeActivity : AppCompatActivity() {
         popUp.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        savedMoney()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        savedMoney()
+    }
+
+    private fun savedMoney(){
+        val uid = FirebaseAuth.getInstance().currentUser!!.uid
+        val rootRef = FirebaseDatabase.getInstance().reference
+        val smokedRef = rootRef.child("users").child(uid)
+        val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+        val valueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user = dataSnapshot.getValue(User::class.java)
+                var startTime: Long = user!!.startDate
+                val currentTime = System.currentTimeMillis()
+                if(currentTime-startTime >= 86400000){
+                    val user = User(uid, email, user.cigs_smoked, user.cigs_cost, user.smoke_time,currentTime,user.moneySaved + user.cigs_cost.toInt())
+                    ref.setValue(user)
+                }
+                smoking_money_saved.text = "Money saved:\n"+ user.moneySaved
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d(TAG, databaseError.message)
+            }
+        }
+
+        smokedRef.addListenerForSingleValueEvent(valueEventListener)
+
+    }
+    class User(val uid: String = "", val username: String = "", val cigs_smoked: String = "", val cigs_cost: String = "", val smoke_time: String = "", val startDate: Long = 0,val moneySaved: Int = 0)
 }

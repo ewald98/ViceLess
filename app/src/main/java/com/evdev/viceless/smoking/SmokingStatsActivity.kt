@@ -1,15 +1,25 @@
 package com.evdev.viceless.smoking
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import com.evdev.viceless.R
+import com.evdev.viceless.activities.HomePageActivity
+import com.evdev.viceless.utils.flagsLogOut
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.RadarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_smoking_stats.*
 
 
 class SmokingStatsActivity: AppCompatActivity() {
@@ -25,6 +35,14 @@ class SmokingStatsActivity: AppCompatActivity() {
         createBarChart(cigsBarChart)
         createBarChart(moneyBarChart)
         createRadarChart(cravingRadarChart)
+        val clickListener = View.OnClickListener { view ->
+            when (view.id) {
+                R.id.smoking_menu_button ->{
+                    showPopup(view)
+                }
+            }
+        }
+        smoking_menu_button.setOnClickListener(clickListener)
 
     }
 
@@ -159,6 +177,37 @@ class SmokingStatsActivity: AppCompatActivity() {
 
         barChart.animateY(1000)
 
+    }
+    private fun showPopup(view: View){
+        val popUp: PopupMenu?
+        popUp = PopupMenu(this, view)
+        popUp.inflate(R.menu.other_menu)
+
+        popUp.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item: MenuItem? ->
+
+            when (item!!.itemId) {
+                R.id.header1 -> {
+                    this.startActivity(Intent(this, HomePageActivity::class.java))
+                }
+                R.id.header2 -> {
+                    Toast.makeText(this, "Vreau sa deschid profileFragment", Toast.LENGTH_SHORT).show()//dar inca nu nu stiu cum...
+                }
+                R.id.header3 -> {
+                    AlertDialog.Builder(this).apply {
+                        setTitle("Are you sure?")
+                        setPositiveButton("Yes"){_, _ ->
+                            FirebaseAuth.getInstance().signOut()
+                            flagsLogOut()
+                        }
+                        setNegativeButton("Cancel"){_, _ ->
+                        }
+                    }.create().show()
+                }
+            }
+
+            true
+        })
+        popUp.show()
     }
 
 }
