@@ -2,6 +2,7 @@ package com.evdev.viceless.activities
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +59,9 @@ class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
 
         holder.getAnswer().addTextChangedListener(object: TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                _retData.set(position, s.toString())
+                _retData[position] = s.toString()
+                Log.d("Data get from layouts", "Answer 1 "+ _retData[0] + "Answer 2 "+ _retData[1] + "Answer 3 "+ _retData[2] ) //data check in logs
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

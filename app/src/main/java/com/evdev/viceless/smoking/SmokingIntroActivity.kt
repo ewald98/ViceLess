@@ -2,6 +2,7 @@ package com.evdev.viceless.smoking
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -12,6 +13,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.evdev.viceless.R
 import com.evdev.viceless.activities.IntroSlide
 import com.evdev.viceless.activities.IntroSliderAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
@@ -47,6 +50,7 @@ class SmokingIntroActivity : AppCompatActivity() {
         startIndicators()
 
         setupButtons()
+
     }
 
     private fun hideActionBar() {
@@ -127,5 +131,10 @@ class SmokingIntroActivity : AppCompatActivity() {
             )
         }
     }
+
 }
+
+
+
+
 
