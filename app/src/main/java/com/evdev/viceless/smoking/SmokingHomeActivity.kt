@@ -22,6 +22,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_smoking_home.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -40,7 +43,14 @@ class SmokingHomeActivity : AppCompatActivity() {
         savedMoney()
         setContentView(R.layout.activity_smoking_home)
 
-        val randomInt = (0..11).shuffled().last()
+//        Query query =
+//        doc.get()
+        val money_saved = 0
+
+        val money_saved_tv = findViewById<TextView>(R.id.smoking_money_saved)
+        money_saved_tv.text = "Money saved: \n$money_saved lei"
+
+        val randomInt = (0 until Supplier.smokingDangers.size).shuffled().last()
         bindSmokingDanger(smokingDangers[randomInt])
 
         smoked_today_increment_button = findViewById(R.id.smoking_today_card)
@@ -74,7 +84,20 @@ class SmokingHomeActivity : AppCompatActivity() {
         }
 
         craving_button.setOnClickListener {
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com")).also {
+
+            val randomInt = (0 until Supplier.cravingLinks.size).shuffled().last()
+            val uriString = Supplier.cravingLinks[randomInt]
+
+//            val rightNow: Date = Date()
+//            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//            val formatted = formatter.format(rightNow)
+//
+//            if (user != null) {
+//                db.collection("users").document(user.uid)
+//                    .update("cravings", FieldValue.arrayUnion(formatted))
+//            }
+
+            Intent(Intent.ACTION_VIEW, Uri.parse(uriString)).also {
                 startActivity(it)
             }
         }
@@ -142,43 +165,4 @@ class SmokingHomeActivity : AppCompatActivity() {
         })
         popUp.show()
     }
-
-    override fun onResume() {
-        super.onResume()
-        savedMoney()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        savedMoney()
-    }
-
-    private fun savedMoney(){
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        val rootRef = FirebaseDatabase.getInstance().reference
-        val smokedRef = rootRef.child("users").child(uid)
-        val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val user = dataSnapshot.getValue(User::class.java)
-                var startTime: Long = user!!.startDate
-                val currentTime = System.currentTimeMillis()
-                if(currentTime-startTime >= 86400000){
-                    val user = User(uid, email, user.cigs_smoked, user.cigs_cost, user.smoke_time,currentTime,user.moneySaved + user.cigs_cost.toInt())
-                    ref.setValue(user)
-                }
-                smoking_money_saved.text = "Money saved:\n"+ user.moneySaved
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d(TAG, databaseError.message)
-            }
-        }
-
-        smokedRef.addListenerForSingleValueEvent(valueEventListener)
-
-    }
-    class User(val uid: String = "", val username: String = "", val cigs_smoked: String = "", val cigs_cost: String = "", val smoke_time: String = "", val startDate: Long = 0,val moneySaved: Int = 0)
 }
