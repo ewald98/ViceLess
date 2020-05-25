@@ -34,9 +34,6 @@ class SmokingHomeActivity : AppCompatActivity() {
     private lateinit var progress_bar_today: CircularProgressBar
     private lateinit var progress_bar_yesterday: CircularProgressBar
 
-    private val user = Firebase.auth.currentUser
-    private val doc = Firebase.firestore.collection("users").document(user!!.uid)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smoking_home)
@@ -86,17 +83,14 @@ class SmokingHomeActivity : AppCompatActivity() {
             val randomInt = (0 until Supplier.cravingLinks.size).shuffled().last()
             val uriString = Supplier.cravingLinks[randomInt]
 
-            val db = Firebase.firestore
-            val user = Firebase.auth.currentUser
-
-            val rightNow: Date = Date()
-            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val formatted = formatter.format(rightNow)
-
-            if (user != null) {
-                db.collection("users").document(user.uid)
-                    .update("cravings", FieldValue.arrayUnion(formatted))
-            }
+//            val rightNow: Date = Date()
+//            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//            val formatted = formatter.format(rightNow)
+//
+//            if (user != null) {
+//                db.collection("users").document(user.uid)
+//                    .update("cravings", FieldValue.arrayUnion(formatted))
+//            }
 
             Intent(Intent.ACTION_VIEW, Uri.parse(uriString)).also {
                 startActivity(it)

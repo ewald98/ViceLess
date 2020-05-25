@@ -70,20 +70,17 @@ class SmokingIntroActivity : AppCompatActivity() {
     }
 
     private fun goToNextActivity() {
-        val db = Firebase.firestore
-        val user = Firebase.auth.currentUser
-
         val s: Array<String> = introSliderAdapter.retrieveData()
-        val userInfo = hashMapOf(
-            "avgCigsPerDay" to s[0],
-            "avgPackCost" to s[1],
-            "yearsBeingSmoker" to s[2]
-        )
-
-        if (user != null) {
-            db.collection("users").document(user.uid)
-                .set(userInfo as Map<String, Any>, SetOptions.merge())
-        }
+//        val userInfo = hashMapOf(
+//            "avgCigsPerDay" to s[0],
+//            "avgPackCost" to s[1],
+//            "yearsBeingSmoker" to s[2]
+//        )
+//
+//        if (user != null) {
+//            db.collection("users").document(user.uid)
+//                .set(userInfo as Map<String, Any>, SetOptions.merge())
+//        }
 
         Intent(applicationContext, SmokingHomeActivity::class.java).also {
             startActivity(it)
