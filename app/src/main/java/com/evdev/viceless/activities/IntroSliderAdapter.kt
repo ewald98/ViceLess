@@ -16,11 +16,7 @@ import com.evdev.viceless.R
 class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
     RecyclerView.Adapter<IntroSliderAdapter.IntroSlideViewHolder>() {
 
-    private var _retData: Array<String>
-
-    init {
-        _retData = Array(introSlides.size, { i -> ""})
-    }
+    private var _retData: Array<String> = Array(introSlides.size, { i -> ""})
 
     inner class IntroSlideViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -58,15 +54,14 @@ class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
         holder.bind(introSlides[position])
 
         holder.getAnswer().addTextChangedListener(object: TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                _retData[position] = s.toString()
-                Log.d("Data get from layouts", "Answer 1 "+ _retData[0] + "Answer 2 "+ _retData[1] + "Answer 3 "+ _retData[2] ) //data check in logs
-
-            }
+            override fun afterTextChanged(s: Editable?) {  }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                _retData[position] = s.toString()
+                Log.d("Data get from layouts", "Answer 1 "+ _retData[0] + "Answer 2 "+ _retData[1] + "Answer 3 "+ _retData[2] ) //data check in logs
+            }
         })
     }
 

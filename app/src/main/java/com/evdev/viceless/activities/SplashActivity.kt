@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.evdev.viceless.R
+import com.evdev.viceless.smoking.SmokingHomeActivity
+import com.evdev.viceless.smoking.SmokingIntroActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SplashActivity : AppCompatActivity() {
 
@@ -12,11 +16,25 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        /*We use the HANDLER function in order to start the main or next activity
-        while the splash screen is loading*/
 
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+            val db = FirebaseFirestore.getInstance()
+            val uID = FirebaseAuth.getInstance().currentUser?.uid
+            if(uID != null){
+                db.collection("users").document(uID).get()
+                    .addOnSuccessListener { result ->
+                        if(result["ChosenVice"] == "Smoke" && result["Cigs_Cost"] != ""
+                            && result["Cigs_Smoked"] != "" && result["Smoke_Time"] != "") {
+                            startActivity(Intent(this, SmokingHomeActivity::class.java))
+                        } else if(result["ChosenVice"] == "Smoke"){
+                            startActivity(Intent(this, SmokingIntroActivity::class.java))
+                        }else {
+                            startActivity(Intent(this, HomePageActivity::class.java))
+                        }
+                    }
+            }else{
+                startActivity(Intent(this, LoginActivity::class.java))
+                }
             finish()
         }, SPLASH_TIMER)
     }

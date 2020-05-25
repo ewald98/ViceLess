@@ -1,5 +1,6 @@
 package com.evdev.viceless.smoking
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +15,7 @@ import com.evdev.viceless.R
 import com.evdev.viceless.activities.IntroSlide
 import com.evdev.viceless.activities.IntroSliderAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
@@ -48,8 +49,8 @@ class SmokingIntroActivity : AppCompatActivity() {
         introSliderViewPager.adapter = introSliderAdapter
 
         startIndicators()
-
         setupButtons()
+
 
     }
 
@@ -87,16 +88,31 @@ class SmokingIntroActivity : AppCompatActivity() {
         )
     }
 
-
-    private fun goToNextActivity() {
-        var s: Array<String> = introSliderAdapter.retrieveData()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: "Null UID"
+    private fun goToNextActivity(){
+        val db = FirebaseFirestore.getInstance()
+        val uID = FirebaseAuth.getInstance().currentUser?.uid?:"Null UID"
         val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+        val s: Array<String> = introSliderAdapter.retrieveData()
         val startDate = System.currentTimeMillis()
-        val user = User(uid, email, s[0], s[1], s[2],startDate,0)
-        Log.d("Data in User object", "Answer 1 "+ user.cigs_smoked + " Answer 2 "+ user.cigs_cost + " Answer 3 "+ user.smoke_time + " Time:" + startDate)
-        ref.setValue(user)
+        val user = hashMapOf(
+            "ID" to uID,
+            "email" to email,
+            "Cigs_Smoked" to s[0],
+            "Cigs_Cost" to s[1],
+            "Smoking_Time" to s[2],
+            "Start Date" to startDate,
+            "ChosenVice" to "Smoke",
+            "SavedMoney" to 0
+        )
+        Log.w(TAG,"Datele: $user")
+        db.collection("users").document(uID).set(user)
+            .addOnSuccessListener {
+                Log.w(TAG,"DocumentSnapshot added with ID:$uID")
+            }
+            .addOnFailureListener{e ->
+                Log.w(TAG,"Error adding document",e)
+
+            }
         Intent(applicationContext, SmokingHomeActivity::class.java).also {
             startActivity(it)
         }
@@ -136,7 +152,6 @@ class SmokingIntroActivity : AppCompatActivity() {
             )
         }
     }
-    class User(val uid: String = "", val username: String = "", val cigs_smoked: String = "", val cigs_cost: String = "", val smoke_time: String = "", val startDate: Long = 0,val moneySaved: Int = 0)
 }
 
 

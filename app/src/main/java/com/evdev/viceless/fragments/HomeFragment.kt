@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -54,30 +55,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkForAnswers(it: FragmentActivity){
-        val uid = FirebaseAuth.getInstance().currentUser!!.uid
-        val rootRef = FirebaseDatabase.getInstance().reference
-        val smokedRef = rootRef.child("users").child(uid)
-        val valueEventListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val user = dataSnapshot.getValue(User::class.java)
-            if(user?.cigs_cost != null){
-                val intent = Intent (it, SmokingHomeActivity::class.java)
-                it.startActivity(intent)
+        val db = FirebaseFirestore.getInstance()
+        val uID = FirebaseAuth.getInstance().currentUser?.uid
+        db.collection("users").document(uID!!).get()
+            .addOnSuccessListener { result ->
+                if(result["Cigs_Cost"] != "" && result["Cigs_Smoked"] != ""
+                    && result["Smoke_Time"] != "") {
+                    startActivity(Intent(it, SmokingHomeActivity::class.java))
+            }else{
+                    startActivity(Intent(it, SmokingIntroActivity::class.java))
+                }
             }
-            else {
-                val intent = Intent (it, SmokingIntroActivity::class.java)
-                it.startActivity(intent)
-            }
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.d(TAG, databaseError.message)
-        }
-    }
-    smokedRef.addListenerForSingleValueEvent(valueEventListener)
     }
 
-    class User(
-        val cigs_cost: String = ""
-    )
 }
