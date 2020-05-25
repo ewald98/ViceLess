@@ -3,12 +3,24 @@ package com.evdev.viceless.smoking
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.evdev.viceless.R
 import com.evdev.viceless.smoking.Supplier.smokingDangers
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_smoking_home.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -22,11 +34,21 @@ class SmokingHomeActivity : AppCompatActivity() {
     private lateinit var progress_bar_today: CircularProgressBar
     private lateinit var progress_bar_yesterday: CircularProgressBar
 
+    private val user = Firebase.auth.currentUser
+    private val doc = Firebase.firestore.collection("users").document(user!!.uid)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_smoking_home)
 
-        val randomInt = (0..11).shuffled().last()
+//        Query query =
+//        doc.get()
+        val money_saved = 0
+
+        val money_saved_tv = findViewById<TextView>(R.id.smoking_money_saved)
+        money_saved_tv.text = "Money saved: \n$money_saved lei"
+
+        val randomInt = (0 until Supplier.smokingDangers.size).shuffled().last()
         bindSmokingDanger(smokingDangers[randomInt])
 
         smoked_today_increment_button = findViewById(R.id.smoking_today_card)
@@ -60,7 +82,23 @@ class SmokingHomeActivity : AppCompatActivity() {
         }
 
         craving_button.setOnClickListener {
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com")).also {
+
+            val randomInt = (0 until Supplier.cravingLinks.size).shuffled().last()
+            val uriString = Supplier.cravingLinks[randomInt]
+
+            val db = Firebase.firestore
+            val user = Firebase.auth.currentUser
+
+            val rightNow: Date = Date()
+            val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            val formatted = formatter.format(rightNow)
+
+            if (user != null) {
+                db.collection("users").document(user.uid)
+                    .update("cravings", FieldValue.arrayUnion(formatted))
+            }
+
+            Intent(Intent.ACTION_VIEW, Uri.parse(uriString)).also {
                 startActivity(it)
             }
         }
@@ -88,4 +126,6 @@ class SmokingHomeActivity : AppCompatActivity() {
         dangersIcon.setImageResource(smokingDanger.icon)
 
     }
+
+
 }

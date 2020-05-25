@@ -12,6 +12,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.evdev.viceless.IntroSlide
 import com.evdev.viceless.IntroSliderAdapter
 import com.evdev.viceless.R
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
 
 
@@ -66,7 +70,20 @@ class SmokingIntroActivity : AppCompatActivity() {
     }
 
     private fun goToNextActivity() {
+        val db = Firebase.firestore
+        val user = Firebase.auth.currentUser
+
         val s: Array<String> = introSliderAdapter.retrieveData()
+        val userInfo = hashMapOf(
+            "avgCigsPerDay" to s[0],
+            "avgPackCost" to s[1],
+            "yearsBeingSmoker" to s[2]
+        )
+
+        if (user != null) {
+            db.collection("users").document(user.uid)
+                .set(userInfo as Map<String, Any>, SetOptions.merge())
+        }
 
         Intent(applicationContext, SmokingHomeActivity::class.java).also {
             startActivity(it)

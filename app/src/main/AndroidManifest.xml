@@ -39,7 +39,6 @@
         <activity android:name=".smoking.SmokingStatsActivity"
             android:theme="@style/AppTheme2" />
 
-
         <activity android:name=".alcohol.AlcoholHomeActivity" />
 
         <activity android:name=".drugs.DrugsHomeActivity" />
