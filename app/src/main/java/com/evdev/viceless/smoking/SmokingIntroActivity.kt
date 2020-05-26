@@ -17,6 +17,7 @@ import com.evdev.viceless.activities.IntroSliderAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
+import java.util.*
 
 
 class SmokingIntroActivity : AppCompatActivity() {
@@ -89,20 +90,23 @@ class SmokingIntroActivity : AppCompatActivity() {
     }
 
     private fun goToNextActivity(){
+        val cal = Calendar.getInstance()
+        var day = cal.get(Calendar.DAY_OF_YEAR)
+        var hour = cal.get(Calendar.HOUR)
         val db = FirebaseFirestore.getInstance()
         val uID = FirebaseAuth.getInstance().currentUser?.uid?:"Null UID"
         val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
         val s: Array<String> = introSliderAdapter.retrieveData()
-        val startDate = System.currentTimeMillis()
         val user = hashMapOf(
             "ID" to uID,
             "email" to email,
             "Cigs_Smoked" to s[0],
             "Cigs_Cost" to s[1],
             "Smoking_Time" to s[2],
-            "Start Date" to startDate,
+            "Start day" to day,
+            "Start hour" to hour,
             "ChosenVice" to "Smoke",
-            "SavedMoney" to 0
+            "SavedMoney" to 0.0
         )
         Log.w(TAG,"Datele: $user")
         db.collection("users").document(uID).set(user)

@@ -59,12 +59,13 @@ class HomeFragment : Fragment() {
         val uID = FirebaseAuth.getInstance().currentUser?.uid
         db.collection("users").document(uID!!).get()
             .addOnSuccessListener { result ->
-                if(result["Cigs_Cost"] != "" && result["Cigs_Smoked"] != ""
-                    && result["Smoke_Time"] != "") {
-                    startActivity(Intent(it, SmokingHomeActivity::class.java))
-            }else{
-                    startActivity(Intent(it, SmokingIntroActivity::class.java))
-                }
+                    if (result["Cigs_Cost"] != "" && result["Cigs_Smoked"] != ""
+                        && result["Smoke_Time"] != "" && result["ID"] != null) {
+                        startActivity(Intent(it, SmokingHomeActivity::class.java))
+                    } else {
+                        startActivity(Intent(it, SmokingIntroActivity::class.java))
+                    }
+
             }
     }
 

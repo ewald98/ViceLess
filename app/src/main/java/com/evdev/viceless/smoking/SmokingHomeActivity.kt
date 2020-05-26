@@ -3,6 +3,7 @@ package com.evdev.viceless.smoking
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
+import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import kotlinx.android.synthetic.main.activity_smoking_home.*
+import java.util.*
+import kotlin.math.roundToInt
 
 
 class SmokingHomeActivity : AppCompatActivity() {
@@ -34,9 +37,9 @@ class SmokingHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        savedMoney()
-        setContentView(R.layout.activity_smoking_home)
+        savedMoney(cigs_smoked_today)
 
+        setContentView(R.layout.activity_smoking_home)
         val randomInt = (0..11).shuffled().last()
         bindSmokingDanger(smokingDangers[randomInt])
 
@@ -62,6 +65,7 @@ class SmokingHomeActivity : AppCompatActivity() {
             }
 
             progress_bar_today.progress = cigs_smoked_today
+            savedMoney(cigs_smoked_today)
         }
 
         smoking_stats_button.setOnClickListener {
@@ -97,6 +101,7 @@ class SmokingHomeActivity : AppCompatActivity() {
         smoked_today_textview.text = (cigs_smoked_today.toInt().toString())
 
         progress_bar_today.progress = cigs_smoked_today
+
     }
 
     private fun bindSmokingDanger(smokingDanger: SmokingDanger) {
@@ -142,32 +147,43 @@ class SmokingHomeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        savedMoney()
+        savedMoney(cigs_smoked_today)
     }
 
     override fun onStart() {
         super.onStart()
-        savedMoney()
+         savedMoney(cigs_smoked_today)
     }
 
-    private fun savedMoney(){
+
+    private fun savedMoney(cigs: Float){
         val db = FirebaseFirestore.getInstance()
         val uID = FirebaseAuth.getInstance().currentUser?.uid?:"Null UID"
+        val cal = Calendar.getInstance()
+        var currentDay = cal.get(Calendar.DAY_OF_YEAR)
+        Log.d(TAG, "Ziua este $currentDay")
+        var currentHour = cal.get(Calendar.HOUR)
         db.collection("users").document(uID).get()
             .addOnSuccessListener { result ->
                 Log.d(TAG,"From Firestore with love: ${result["ID"]}")
-                var startTime: Long = result["Start Date"] as Long
-                val currentTime = System.currentTimeMillis()
-                var money = result["SavedMoney"] as Long
-                if(currentTime-startTime >= 86400000){
-                    startTime = currentTime
-                    var cost = result["Cigs_Cost"] as String
-                    if(cost == "")
-                        cost = 0.toString()
-                    money += (cost).toInt()
+                var money = result["SavedMoney"] as Double
+                Log.d(TAG,"cIGARS SMOKED $cigs" )
+                //trebuie rezolvata problema cu schimbarea zilei
+                if(cigs == 0.0f){
+                    if(currentDay > result["Start day"] as Long && currentHour >= result["Start hour"] as Long){
+                        var cost = result["Cigs_Cost"] as String
+                        if(cost == "")
+                            cost = 0.toString()
+                        money += (cost).toInt()
+                        Log.d(TAG, "Cigs  e 0")
+                    }
+                }else{
+                    var costCigs = (((result["Cigs_Cost"] as String).toDouble()) / 20.toDouble()) * cigs.toDouble()
+                    money -= costCigs//in costCigs e pretul pentru tigarile fumate
+                    Log.d(TAG, "Banii cheltuiti pe tigari ${costCigs.toString()} and $money")
                 }
                 val addOnFailureListener = db.collection("users").document(uID).update(
-                    "Start Date", startTime,
+                    "Start day", currentDay,
                     "SavedMoney", money
                 )
                     .addOnSuccessListener {
