@@ -63,7 +63,6 @@ class UpdatePasswordFragment : Fragment() {
                         }
                     }
             }
-
         }
 
         button_update.setOnClickListener {

@@ -9,12 +9,13 @@
     android:paddingLeft="30dp"
     android:paddingRight="30dp">
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@drawable/rectangle_frame"
-        android:paddingTop="20dp">
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,5 +72,5 @@
                 android:background="@color/colorSecondaryText"/>
 
         </LinearLayout>
-    </FrameLayout>
+    </ScrollView>
 </LinearLayout>

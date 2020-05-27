@@ -14,32 +14,19 @@ import androidx.viewpager2.widget.ViewPager2
 import com.evdev.viceless.R
 import com.evdev.viceless.activities.IntroSlide
 import com.evdev.viceless.activities.IntroSliderAdapter
+import com.evdev.viceless.utils.Supplier
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_smoking_intro.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class SmokingIntroActivity : AppCompatActivity() {
 
     private var startDate = ""
-    private val introSliderAdapter =
-        IntroSliderAdapter(
-            listOf(
-                IntroSlide(
-                    "How many cigarettes do you usually smoke a day?",
-                    R.drawable.intro_image1
-                ),
-                IntroSlide(
-                    "How much does a pack cost on average?",
-                    R.drawable.intro_image2
-                ),
-                IntroSlide(
-                    "For how long have you been a smoker?",
-                    R.drawable.intro_image3
-                )
-            )
-        )
+    private val introSliderAdapter = IntroSliderAdapter(Supplier.smokingIntroSlides)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +38,6 @@ class SmokingIntroActivity : AppCompatActivity() {
 
         startIndicators()
         setupButtons()
-
 
     }
 
@@ -91,8 +77,12 @@ class SmokingIntroActivity : AppCompatActivity() {
 
     private fun goToNextActivity(){
         val cal = Calendar.getInstance()
-        var day = cal.get(Calendar.DAY_OF_YEAR)
-        var hour = cal.get(Calendar.HOUR)
+//        var day = cal.get(Calendar.DAY_OF_YEAR)
+//        var hour = cal.get(Calendar.HOUR)
+        val rightNow: Date = Date()
+        val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val formatted = formatter.format(rightNow)
+
         val db = FirebaseFirestore.getInstance()
         val uID = FirebaseAuth.getInstance().currentUser?.uid?:"Null UID"
         val email = FirebaseAuth.getInstance().currentUser?.email?:"No email"
@@ -103,8 +93,7 @@ class SmokingIntroActivity : AppCompatActivity() {
             "Cigs_Smoked" to s[0],
             "Cigs_Cost" to s[1],
             "Smoking_Time" to s[2],
-            "Start day" to day,
-            "Start hour" to hour,
+            "start_date" to formatted,
             "ChosenVice" to "Smoke",
             "SavedMoney" to 0.0
         )

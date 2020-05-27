@@ -101,20 +101,20 @@
                             android:layout_gravity="center">
 
 
-                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                                android:id="@+id/cigs_smoked_yesterday_bar"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_centerHorizontal="true"
+<!--                            <com.mikhaellopez.circularprogressbar.CircularProgressBar-->
+<!--                                android:id="@+id/cigs_smoked_yesterday_bar"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:layout_centerHorizontal="true"-->
 
-                                app:cpb_background_progressbar_width="0dp"
-                                app:cpb_progress="10"
-                                app:cpb_progress_direction="to_left"
-                                app:cpb_progress_max="20"
-                                app:cpb_progressbar_color="#7B8992"
-                                app:cpb_progressbar_width="20dp"
-                                app:cpb_start_angle="270" />
+<!--                                app:cpb_background_progressbar_width="0dp"-->
+<!--                                app:cpb_progress="10"-->
+<!--                                app:cpb_progress_direction="to_left"-->
+<!--                                app:cpb_progress_max="20"-->
+<!--                                app:cpb_progressbar_color="#7B8992"-->
+<!--                                app:cpb_progressbar_width="20dp"-->
+<!--                                app:cpb_start_angle="270" />-->
 
                             <com.mikhaellopez.circularprogressbar.CircularProgressBar
                                 android:id="@+id/cigs_smoked_today_bar"

@@ -10,17 +10,22 @@ data class SmokingDanger (
 
 object Supplier {
 
-    val smokingIntroSlides = listOf(
+    val cravingLinks = listOf<String>(
+        "https://www.cancer.gov/about-cancer/causes-prevention/risk/tobacco/cessation-fact-sheet",
+        "https://www.verywellhealth.com/how-does-smoking-affect-your-eyes-3421856"
+    )
+
+    val smokingIntroSlides = listOf<IntroSlide>(
         IntroSlide(
             "How many cigarettes do you usually smoke a day?",
             R.drawable.intro_image1
         ),
         IntroSlide(
-            "How much does a pack cost on average?",
+            "How much does a pack cost on average? (in lei)",
             R.drawable.intro_image2
         ),
         IntroSlide(
-            "For how long have you been a smoker?",
+            "For how long have you been a smoker? (in yrs)",
             R.drawable.intro_image3
         )
     )
