@@ -62,62 +62,71 @@ class SmokingHomeActivity : AppCompatActivity() {
                 .get()
                 .addOnSuccessListener { result ->
 
+                    val tv: TextView = findViewById<TextView>(R.id.stats_message)
+
                     val rightNow: Date = Date()
                     val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                     val formatted = formatter.format(rightNow)
 
                     var cigs_smoked_past = (result["Cigs_Smoked"] as String).toInt()
-                    var cigsArr = result["cigs"] as List<String>
-                    var cigsToday: List<String> = cigsArr.filter { s -> s.contains(formatted) }
 
-                    cigs_smoked_today = cigsToday.size.toFloat()
+
+                    if (result.contains("cigs")) {
+                        var cigsArr = result["cigs"] as List<String>
+                        var cigsToday: List<String> = cigsArr.filter { s -> s.contains(formatted) }
+
+                        cigs_smoked_today = cigsToday.size.toFloat()
+
+                        // set progress bars
+                        val day_before_today = mutableListOf<String>(
+                            formatter.format(rightNow.getRelativeDay(-1)),
+                            formatter.format(rightNow.getRelativeDay(-2)),
+                            formatter.format(rightNow.getRelativeDay(-3)),
+                            formatter.format(rightNow.getRelativeDay(-4))
+                        )
+
+                        val y_count = mutableListOf(0, 0, 0, 0)
+
+                        for (cig in cigsArr)
+                            for (i in (0 until 4))
+                                if (cig.contains(day_before_today[i]))
+                                    y_count[i] += 1
+
+                        val y_max = y_count.max()
+                        for (i in 0 until 4) {
+                            y_count[i] = ((y_count[i].toFloat() / y_max!!) * 100f).toInt()
+                        }
+
+                        val pb1 = findViewById<ProgressBar>(R.id.progressBar1)
+                        val pb2 = findViewById<ProgressBar>(R.id.progressBar2)
+                        val pb3 = findViewById<ProgressBar>(R.id.progressBar3)
+                        val pb4 = findViewById<ProgressBar>(R.id.progressBar4)
+
+                        pb1.progress = y_count[0]
+                        pb2.progress = y_count[1]
+                        pb3.progress = y_count[2]
+                        pb4.progress = y_count[3]
+
+                        pb1.alpha = (y_count[0].toFloat() / 100)
+                        pb2.alpha = (y_count[1].toFloat() / 100)
+                        pb3.alpha = (y_count[2].toFloat() / 100)
+                        pb4.alpha = (y_count[3].toFloat() / 100)
+
+                        if (y_count[0] > y_count[1]) {
+                            tv.text = "It's not over, \ndon't give up!"
+                        } else {
+                            tv.text = "You're making \nprogress!"
+                        }
+                    } else {
+                        tv.text = "No stats yet!"
+                    }
+
                     smoked_today_textview.text = cigs_smoked_today.toInt().toString()
                     progress_bar_today.apply {
                         progress = cigs_smoked_today
                         progressMax = cigs_smoked_past.toFloat() * (progress.toInt()/cigs_smoked_past + 1)
                     }
 
-                    // set progress bars
-                    val day_before_today = mutableListOf<String>(
-                        formatter.format(rightNow.getRelativeDay(-1)),
-                        formatter.format(rightNow.getRelativeDay(-2)),
-                        formatter.format(rightNow.getRelativeDay(-3)),
-                        formatter.format(rightNow.getRelativeDay(-4))
-                    )
-
-                    val y_count = mutableListOf(0, 0, 0, 0)
-
-                    for (cig in cigsArr)
-                        for (i in (0 until 4))
-                            if (cig.contains(day_before_today[i]))
-                                y_count[i] += 1
-
-                    val y_max = y_count.max()
-                    for (i in 0 until 4) {
-                        y_count[i] = ((y_count[i].toFloat() / y_max!!) * 100f).toInt()
-                    }
-
-                    val pb1 = findViewById<ProgressBar>(R.id.progressBar1)
-                    val pb2 = findViewById<ProgressBar>(R.id.progressBar2)
-                    val pb3 = findViewById<ProgressBar>(R.id.progressBar3)
-                    val pb4 = findViewById<ProgressBar>(R.id.progressBar4)
-
-                    pb1.progress = y_count[0]
-                    pb2.progress = y_count[1]
-                    pb3.progress = y_count[2]
-                    pb4.progress = y_count[3]
-
-                    pb1.alpha = (y_count[0].toFloat() / 100)
-                    pb2.alpha = (y_count[1].toFloat() / 100)
-                    pb3.alpha = (y_count[2].toFloat() / 100)
-                    pb4.alpha = (y_count[3].toFloat() / 100)
-
-                    val tv: TextView = findViewById<TextView>(R.id.stats_message)
-                    if (y_count[0] > y_count[1]) {
-                        tv.text = "It's not over, \ndon't give up!"
-                    } else {
-                        tv.text = "You're making \nprogress!"
-                    }
 
                 }
                 .addOnFailureListener { exception ->
@@ -263,7 +272,7 @@ class SmokingHomeActivity : AppCompatActivity() {
 
         db.collection("users").document(uID).get()
             .addOnSuccessListener { result ->
-                if(result.contains("Smoking_Time")) {
+                if(result.contains("cigs")) {
                     var cigsArr = result["cigs"] as List<String>
                     var cigs_smoked_past = (result["Cigs_Smoked"] as String).toDouble()
                     var cig_cost = (result["Cigs_Cost"] as String).toDouble() / 20
