@@ -3,6 +3,7 @@ package com.evdev.viceless.smoking
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -19,7 +20,13 @@ import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_smoking_stats.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class SmokingStatsActivity: AppCompatActivity() {
@@ -30,11 +37,10 @@ class SmokingStatsActivity: AppCompatActivity() {
 
         val cigsBarChart = findViewById<BarChart>(R.id.daily_cigs_bar_chart)
         val moneyBarChart = findViewById<BarChart>(R.id.daily_money_saved_bar_chart)
+        val cigsRadarChart = findViewById<RadarChart>(R.id.cigs_radar_chart)
         val cravingRadarChart = findViewById<RadarChart>(R.id.craving_hours_radar_chart)
 
-        createBarChart(cigsBarChart)
-        createBarChart(moneyBarChart)
-        createRadarChart(cravingRadarChart)
+        createCharts(cigsBarChart, moneyBarChart, cigsRadarChart, cravingRadarChart)
         val clickListener = View.OnClickListener { view ->
             when (view.id) {
                 R.id.smoking_menu_button ->{
@@ -46,10 +52,93 @@ class SmokingStatsActivity: AppCompatActivity() {
 
     }
 
-    private fun createRadarChart(radarChart: RadarChart) {
+    private fun createCharts(cigsBarChart: BarChart, moneyBarChart: BarChart, cigsRadarChart: RadarChart, cravingsRadarChart: RadarChart) {
 
-        val days = arrayListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23")
-        val xAxisFormatter = IndexAxisValueFormatter(days)
+        val db = Firebase.firestore
+        val user = FirebaseAuth.getInstance().currentUser
+
+        val today: Date = Date()
+        val formatter: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val formatted = formatter.format(today)
+
+        if (user != null) {
+            db.collection("users").document(user.uid)
+                .get()
+                .addOnSuccessListener { result ->
+
+                    if (result.contains("cigs")) {
+                        val cravingsArr = result["cravings"] as List<String>
+
+                        val pack_cost = (result["Cigs_Cost"] as String).toFloat()
+                        val avgCigsPerDay = (result["Cigs_Smoked"] as String).toFloat()
+
+                        val money_spent_per_day_past = (pack_cost / 20) * avgCigsPerDay
+
+                        var cigsArr = result["cigs"] as List<String>
+//                        cigsArr = cigsArr.filter { s -> !s.contains(formatted) }
+
+                        val start_date = result["start_date"] as String
+                        val format_extracter: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                        val start_date_parsed = format_extracter.parse(start_date)
+
+                        val view_format: DateFormat = SimpleDateFormat("MM-dd")
+
+                        var date = start_date_parsed
+                        var i = 0
+                        var cigs_count: ArrayList<Int> = ArrayList<Int>()
+                        var day_dates: ArrayList<String> = ArrayList<String>()
+
+                        while (date.before(today)) {
+
+                            val date_formatted = view_format.format(date)
+                            day_dates.add(date_formatted)
+                            cigs_count.add((cigsArr.filter{s -> s.contains(date_formatted)}).size)
+
+                            // date = tomorrow
+                            date = date.getRelativeDay(1)
+                            i += 1
+                        }
+
+                        var money_saved = cigs_count.map { cigs ->
+                            money_spent_per_day_past - cigs * (pack_cost/20) }
+
+                        createDailyCigsBarChart(cigsBarChart, day_dates, cigs_count, i)
+                        createMoneySavedBarChart(moneyBarChart, day_dates,
+                            money_saved as ArrayList<Float>, i)
+
+                        // RADAR CHARTS
+                        val cigHoursRaw = cigsArr.map { s -> s.substring(11, 13) }
+                        val cigHours: ArrayList<Int> = ArrayList<Int>()
+
+                        for (i in (0 until 24)) {
+                            cigHours.add(cigHoursRaw.filter{ s -> s.equals(i.toString())}.size)
+                        }
+                        val avgCigHours = cigHours.map { count -> count.toFloat() / i }
+
+                        createCigHoursRadarChart(cigsRadarChart, avgCigHours as ArrayList<Float>)
+
+                        val cravingHoursRaw = cravingsArr.map { s -> s.substring(11, 13)}
+                        val cravingHours: ArrayList<Int> = ArrayList<Int>()
+
+                        for (i in (0 until 24)) {
+                            cravingHours.add(cravingHoursRaw.filter{ s -> s.equals(i.toString())}.size)
+                        }
+                        val avgCravingHours = cravingHours.map { count -> count.toFloat() / i }
+
+                        createCigHoursRadarChart(cravingsRadarChart, avgCravingHours as ArrayList<Float>)
+                    }
+
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("error", "Error getting documents: ", exception)
+                }
+        }
+    }
+
+    private fun createCigHoursRadarChart(radarChart: RadarChart, avgCigHours: ArrayList<Float>) {
+
+        val hours = arrayListOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23")
+        val xAxisFormatter = IndexAxisValueFormatter(hours)
 
         val xAxis: XAxis = radarChart.getXAxis()
         xAxis.position = XAxisPosition.BOTTOM
@@ -61,41 +150,16 @@ class SmokingStatsActivity: AppCompatActivity() {
 
 
         var entries = ArrayList<RadarEntry>()
-        entries.add(RadarEntry(4f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(1f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(0f))
-        entries.add(RadarEntry(2f))
-        entries.add(RadarEntry(2f))
-        entries.add(RadarEntry(2f))
-        entries.add(RadarEntry(1f))
-        entries.add(RadarEntry(1.5f))
-        entries.add(RadarEntry(2f))
-        entries.add(RadarEntry(3f))
-        entries.add(RadarEntry(1f))
-        entries.add(RadarEntry(2f))
-        entries.add(RadarEntry(3f))
-        entries.add(RadarEntry(4f))
-        entries.add(RadarEntry(5f))
-        entries.add(RadarEntry(4f))
-        entries.add(RadarEntry(3f))
-        entries.add(RadarEntry(2f))
 
+        for (avgCigs in avgCigHours) {
+            entries.add(RadarEntry(avgCigs))
+        }
 
         val radarDataSet = RadarDataSet(entries, "craving hours")
         radarDataSet.setDrawValues(true)
-        radarDataSet.color = Color.argb(255, 52, 75, 91)    // alpha 64 should be the minimum (... either 1 cig or the historical minimum)
-//        barDataSet.resetColors()
-
-//        barDataSet.setGradientColor(R.color.colorPrimary, R.color.colorSecondaryText)
+        radarDataSet.color = Color.argb(255, 52, 75, 91)
 
         radarChart.legend.isEnabled = false
-
 
         val radarData = RadarData(radarDataSet)
         radarChart.setTouchEnabled(true)
@@ -109,10 +173,8 @@ class SmokingStatsActivity: AppCompatActivity() {
         radarChart.animateY(1000)
     }
 
-    private fun createBarChart(barChart: BarChart) {
+    private fun createDailyCigsBarChart(barChart: BarChart, days: ArrayList<String>, cigs: ArrayList<Int>, count: Int) {
 
-
-        val days = arrayListOf("11.05", "12.05", "13.05", "14.05", "15.05", "16.05", "17.05", "18.05", "19.05")
         val xAxisFormatter = IndexAxisValueFormatter(days)
 
         val xAxis: XAxis = barChart.getXAxis()
@@ -130,36 +192,23 @@ class SmokingStatsActivity: AppCompatActivity() {
         lAxis.axisMinimum = 0f
 
 
-        var cigsSmoked = ArrayList<BarEntry>()
-        cigsSmoked.add(BarEntry(0f, 13f))
-        cigsSmoked.add(BarEntry(1f, 14f))
-        cigsSmoked.add(BarEntry(2f, 15f))
-        cigsSmoked.add(BarEntry(3f, 16f))
-        cigsSmoked.add(BarEntry(4f, 17f))
-        cigsSmoked.add(BarEntry(5f, 18f))
-        cigsSmoked.add(BarEntry(6f, 19f))
-        cigsSmoked.add(BarEntry(7f, 20f))
-        cigsSmoked.add(BarEntry(8f, 15f))
+        val cigsSmoked = ArrayList<BarEntry>()
+        val max_cigs = cigs.max()
+        val colors = ArrayList<Int>()
+
+        var i = 0f
+        for (cig in cigs) {
+            cigsSmoked.add(BarEntry(i, cig.toFloat()))
+            colors.add(Color.argb(55 + (200 * (cig.toFloat()/ max_cigs!!)).toInt(), 52, 75, 91))
+            i += 1f
+        }
 
         val barDataSet = BarDataSet(cigsSmoked, "Daily smoked cigs")
         barDataSet.setDrawValues(true)
-//        barDataSet.resetColors()
 
-        barDataSet.colors = arrayListOf(
-            Color.argb((255 * (5f/20)).toInt(), 52, 75, 91),    // alpha 64 should be the minimum (... either 1 cig or the historical minimum)
-            Color.argb((255 * (14f/20)).toInt(), 52, 75, 91),   // alpha 255 should be the historical maximum
-            Color.argb((255 * (15f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (16f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (17f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (18f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (19f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (20f/20)).toInt(), 52, 75, 91),
-            Color.argb((255 * (15f/20)).toInt(), 52, 75, 91)
-        )
-//        barDataSet.setGradientColor(R.color.colorPrimary, R.color.colorSecondaryText)
+        barDataSet.colors = colors
 
         barChart.legend.isEnabled = false
-
 
         val barData = BarData(barDataSet)
         barChart.setTouchEnabled(true)
@@ -176,8 +225,59 @@ class SmokingStatsActivity: AppCompatActivity() {
         barChart.isScaleYEnabled = false
 
         barChart.animateY(1000)
-
     }
+
+    private fun createMoneySavedBarChart(barChart: BarChart, days: ArrayList<String>, money : ArrayList<Float>, count: Int) {
+
+        val xAxisFormatter = IndexAxisValueFormatter(days)
+
+        val xAxis: XAxis = barChart.getXAxis()
+        xAxis.position = XAxisPosition.BOTTOM
+        xAxis.setDrawGridLines(false)
+        xAxis.granularity = 1f // only intervals of 1 day
+
+        xAxis.labelCount = 7
+        xAxis.valueFormatter = xAxisFormatter
+
+
+        val cigsSmoked = ArrayList<BarEntry>()
+        val max_money = money.max()
+        val colors = ArrayList<Int>()
+
+        var i = 0f
+        for (cig in money) {
+            cigsSmoked.add(BarEntry(i, cig.toFloat()))
+            if (cig > 0f)
+                colors.add(Color.argb(55 + (200 * (cig.toFloat()/ max_money!!)).toInt(), 52, 75, 91))
+            else
+                colors.add(Color.argb(100 + (155 * (cig.toFloat()/ max_money!!)).toInt(), 247,80, 0))
+            i += 1f
+        }
+
+        val barDataSet = BarDataSet(cigsSmoked, "Daily smoked cigs")
+        barDataSet.setDrawValues(true)
+
+        barDataSet.colors = colors
+
+        barChart.legend.isEnabled = false
+
+        val barData = BarData(barDataSet)
+        barChart.setTouchEnabled(true)
+        barChart.data = barData
+        barChart.description.text = ""
+        barChart.setNoDataText("No data available!")
+        barChart.setNoDataTextColor(Color.BLACK)
+        barChart.setDrawGridBackground(false)
+        barChart.setDrawBorders(false)
+        barChart.setMaxVisibleValueCount(7)
+
+        barChart.setTouchEnabled(true)
+        barChart.isScaleXEnabled = true
+        barChart.isScaleYEnabled = false
+
+        barChart.animateY(1000)
+    }
+
     private fun showPopup(view: View){
         val popUp: PopupMenu?
         popUp = PopupMenu(this, view)
@@ -210,4 +310,11 @@ class SmokingStatsActivity: AppCompatActivity() {
         popUp.show()
     }
 
+}
+
+private fun Date.getRelativeDay(day: Int): Date {
+    val cal = Calendar.getInstance()
+    cal.time = this
+    cal.add(Calendar.DATE, day)
+    return cal.time
 }
